@@ -1,238 +1,127 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indana Zulfa - Portfolio</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700&display=swap" rel="stylesheet">
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #1a1a1a;
-            color: #f8f8f8;
-            scroll-behavior: smooth;
-            margin: 0;
-            min-height: 100vh;
-        }
-        h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
-        }
-        .slide {
-            display: none;
-            height: 100vh;
-            overflow-y: auto;
-            animation: fadeIn 0.5s ease-in-out;
-            transition: opacity 0.5s;
-            opacity: 0;
-            outline: none;
-        }
-        .slide.active {
-            display: block;
-            opacity: 1;
-        }
-        .nav-dot {
-            height: 14px;
-            width: 14px;
-            border-radius: 50%;
-            background-color: #4a4a4a;
-            transition: all 0.3s cubic-bezier(.4,2,.6,1);
-            border: 2px solid transparent;
-            outline: none;
-            cursor: pointer;
-        }
-        .nav-dot:focus {
-            border: 2px solid #e0a9c9;
-            box-shadow: 0 0 0 2px #e0a9c955;
-        }
-        .nav-dot.active {
-            background-color: #e0a9c9;
-            transform: scale(1.3);
-            border-color: #e0a9c9;
-        }
-        .project-card {
-            border-left: 3px solid #e0a9c9;
-            transition: all 0.3s cubic-bezier(.4,2,.6,1);
-            box-shadow: 0 2px 8px rgba(224, 169, 201, 0.05);
-        }
-        .project-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            box-shadow: 0 10px 24px rgba(224, 169, 201, 0.15);
-        }
-        .skill-pill {
-            background: linear-gradient(135deg, #2d2d2d 0%, #3a3a3a 100%);
-            border: 1px solid #4a4a4a;
-            transition: all 0.3s;
-        }
-        .skill-pill:hover {
-            border-color: #e0a9c9;
-            transform: translateY(-2px) scale(1.05);
-        }
-        .btn {
-            transition: all 0.3s;
-            box-shadow: 0 2px 8px rgba(224, 169, 201, 0.08);
-            font-weight: 600;
-        }
-        .btn:hover {
-            transform: translateY(-2px) scale(1.03);
-            box-shadow: 0 6px 16px rgba(224, 169, 201, 0.15);
-        }
-        .section-title {
-            position: relative;
-        }
-        .section-title::after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, #e0a9c9, #9e7b9b);
-            border-radius: 2px;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #2d2d2d;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #4a4a4a;
-            border-radius: 4px;
-            box-shadow: 0 2px 8px #e0a9c955;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #e0a9c9;
-            box-shadow: 0 4px 16px #e0a9c955;
-        }
-        .decoration-element {
-            position: absolute;
-            opacity: 0.1;
-            z-index: -1;
-        }
-        /* Responsive */
-        @media (max-width: 768px) {
-            .slide {
-                padding: 1.5rem !important;
-            }
-            .section-title::after {
-                width: 40px;
-            }
-        }
-        /* Utility classes (for padding, margin, flex, etc.) */
-        .fixed { position: fixed; }
-        .right-8 { right: 2rem; }
-        .top-1\/2 { top: 50%; }
-        .transform { transform: translateY(-50%); }
-        .-translate-y-1\/2 { transform: translateY(-50%); }
-        .z-50 { z-index: 50; }
-        .flex { display: flex; }
-        .flex-col { flex-direction: column; }
-        .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; }
-        .px-8 { padding-left: 2rem; padding-right: 2rem; }
-        .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
-        .md\:px-16 { padding-left: 4rem; padding-right: 4rem; }
-        .md\:py-20 { padding-top: 5rem; padding-bottom: 5rem; }
-        .max-w-5xl { max-width: 64rem; }
-        .mx-auto { margin-left: auto; margin-right: auto; }
-        .gap-10 { gap: 2.5rem; }
-        .gap-3 { gap: 0.75rem; }
-        .gap-4 { gap: 1rem; }
-        .gap-6 { gap: 1.5rem; }
-        .gap-2 { gap: 0.5rem; }
-        .w-48 { width: 12rem; }
-        .h-48 { height: 12rem; }
-        .rounded-full { border-radius: 9999px; }
-        .bg-gradient-to-br { background: linear-gradient(to bottom right, #e0a9c9, #9e7b9b); }
-        .flex-1 { flex: 1 1 0%; }
-        .text-4xl { font-size: 2.25rem; }
-        .md\:text-5xl { font-size: 3rem; }
-        .font-bold { font-weight: 700; }
-        .mb-4 { margin-bottom: 1rem; }
-        .mb-6 { margin-bottom: 1.5rem; }
-        .mb-8 { margin-bottom: 2rem; }
-        .text-[#e0a9c9] { color: #e0a9c9; }
-        .text-2xl { font-size: 1.5rem; }
-        .font-semibold { font-weight: 600; }
-        .text-gray-300 { color: #d1d5db; }
-        .leading-relaxed { line-height: 1.625; }
-        .flex-wrap { flex-wrap: wrap; }
-        .px-4 { padding-left: 1rem; padding-right: 1rem; }
-        .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
-        .rounded-full { border-radius: 9999px; }
-        .bg-[#2d2d2d] { background-color: #2d2d2d; }
-        .border { border-width: 1px; }
-        .border-[#e0a9c9] { border-color: #e0a9c9; }
-        .text-sm { font-size: 0.875rem; }
-        .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
-        .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
-        .rounded-full { border-radius: 9999px; }
-        .bg-gradient-to-r { background: linear-gradient(to right, #e0a9c9, #9e7b9b); }
-        .text-white { color: #fff; }
-        .font-medium { font-weight: 500; }
-        .bg-[#252525] { background-color: #252525; }
-        .rounded-xl { border-radius: 1rem; }
-        .p-6 { padding: 1.5rem; }
-        .border-[#3a3a3a] { border-color: #3a3a3a; }
-        .text-xl { font-size: 1.25rem; }
-        .mr-3 { margin-right: 0.75rem; }
-        .grid { display: grid; }
-        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
-        .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        .gap-10 { gap: 2.5rem; }
-        .pl-8 { padding-left: 2rem; }
-        .border-l-4 { border-left-width: 4px; }
-        .space-y-8 > :not([hidden]) ~ :not([hidden]) { margin-top: 2rem; }
-        .mb-12 { margin-bottom: 3rem; }
-        .text-3xl { font-size: 1.875rem; }
-        .list-disc { list-style-type: disc; }
-        .list-inside { list-style-position: inside; }
-        .space-y-1 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.25rem; }
-        .inline-flex { display: inline-flex; }
-        .items-center { align-items: center; }
-        .hover\:underline:hover { text-decoration: underline; }
-        .w-16 { width: 4rem; }
-        .h-16 { height: 4rem; }
-        .text-2xl { font-size: 1.5rem; }
-        .w-12 { width: 3rem; }
-        .h-12 { height: 3rem; }
-        .text-lg { font-size: 1.125rem; }
-        .mb-1 { margin-bottom: 0.25rem; }
-        .mt-12 { margin-top: 3rem; }
-        .text-center { text-align: center; }
-        .text-gray-400 { color: #9ca3af; }
-        .hover\:text-[#e0a9c9]:hover { color: #e0a9c9; }
-        .hover\:border-[#e0a9c9]:hover { border-color: #e0a9c9; }
-        .transition-all { transition: all 0.3s; }
-        .duration-300 { transition-duration: 300ms; }
-        /* Add more utility classes as needed */
-    </style>
-</head>
-<body>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #1a1a1a;
+        color: #f8f8f8;
+        scroll-behavior: smooth;
+    }
+    
+    h1, h2, h3, h4 {
+        font-family: 'Playfair Display', serif;
+    }
+    
+    .slide {
+        display: none;
+        height: 100vh;
+        overflow-y: auto;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    .slide.active {
+        display: block;
+    }
+    
+    .nav-dot {
+        height: 12px;
+        width: 12px;
+        border-radius: 50%;
+        background-color: #4a4a4a;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-dot.active {
+        background-color: #e0a9c9;
+        transform: scale(1.2);
+    }
+    
+    .project-card {
+        border-left: 3px solid #e0a9c9;
+        transition: all 0.3s ease;
+    }
+    
+    .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(224, 169, 201, 0.2);
+    }
+    
+    .skill-pill {
+        background: linear-gradient(135deg, #2d2d2d 0%, #3a3a3a 100%);
+        border: 1px solid #4a4a4a;
+        transition: all 0.3s ease;
+    }
+    
+    .skill-pill:hover {
+        border-color: #e0a9c9;
+        transform: translateY(-2px);
+    }
+    
+    .btn {
+        transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+    
+    .section-title {
+        position: relative;
+    }
+    
+    .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #e0a9c9, #9e7b9b);
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #2d2d2d;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: #4a4a4a;
+        border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: #e0a9c9;
+    }
+    
+    .decoration-element {
+        position: absolute;
+        opacity: 0.1;
+        z-index: -1;
+    }
+</style>
     <!-- Navigation dots -->
     <div class="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 flex flex-col space-y-4">
-        <button class="nav-dot active" data-slide="slide1" aria-label="Tentang Saya" tabindex="0"></button>
-        <button class="nav-dot" data-slide="slide2" aria-label="Keahlian Teknis" tabindex="0"></button>
-        <button class="nav-dot" data-slide="slide3" aria-label="Proyek Pilihan" tabindex="0"></button>
-        <button class="nav-dot" data-slide="slide4" aria-label="Sertifikasi" tabindex="0"></button>
-        <button class="nav-dot" data-slide="slide5" aria-label="Kontak" tabindex="0"></button>
+        <button class="nav-dot active" data-slide="slide1"></button>
+        <button class="nav-dot" data-slide="slide2"></button>
+        <button class="nav-dot" data-slide="slide3"></button>
+        <button class="nav-dot" data-slide="slide4"></button>
+        <button class="nav-dot" data-slide="slide5"></button>
     </div>
-
+    
     <!-- Slide 1: About Me -->
-    <div id="slide1" class="slide active px-8 py-12 md:px-16 md:py-20" role="region" aria-label="Tentang Saya" tabindex="-1">
+    <div id="slide1" class="slide active px-8 py-12 md:px-16 md:py-20">
         <div class="max-w-5xl mx-auto">
             <div class="flex flex-col md:flex-row items-center md:items-start gap-10">
-                <div class="w-48 h-48 rounded-full bg-gradient-to-br flex items-center justify-center">
+                <div class="w-48 h-48 rounded-full bg-gradient-to-br from-[#e0a9c9] to-[#9e7b9b] flex items-center justify-center">
                     <span class="text-6xl">👩‍💻</span>
                 </div>
+                
                 <div class="flex-1">
                     <h1 class="text-4xl md:text-5xl font-bold mb-4 text-[#e0a9c9]">Indana Zulfa</h1>
                     <div class="flex flex-wrap gap-3 mb-6">
@@ -240,6 +129,7 @@
                         <span class="px-4 py-1 rounded-full bg-[#2d2d2d] border border-[#e0a9c9] text-sm">IT Support</span>
                         <span class="px-4 py-1 rounded-full bg-[#2d2d2d] border border-[#e0a9c9] text-sm">Database Administrator</span>
                     </div>
+                    
                     <h2 class="section-title text-2xl font-semibold mb-6">Tentang Saya</h2>
                     <p class="text-gray-300 leading-relaxed mb-8">
                         Lulusan Teknik Informatika yang antusias di bidang pengembangan web dan manajemen data. 
@@ -247,6 +137,7 @@
                         Pernah terlibat dalam pengembangan sistem informasi dan asistensi praktikum. 
                         Siap berkontribusi dalam posisi Frontend Developer, IT Support, atau Database Administrator.
                     </p>
+                    
                     <div class="flex flex-wrap gap-4">
                         <button class="btn px-6 py-3 rounded-full bg-gradient-to-r from-[#e0a9c9] to-[#9e7b9b] text-white font-medium">
                             Lihat Proyek
@@ -259,13 +150,13 @@
             </div>
         </div>
     </div>
-
+    
     <!-- Slide 2: Technical Skills -->
-    <div id="slide2" class="slide px-8 py-12 md:px-16 md:py-20" role="region" aria-label="Keahlian Teknis" tabindex="-1">
+    <div id="slide2" class="slide px-8 py-12 md:px-16 md:py-20">
         <div class="max-w-5xl mx-auto">
             <h2 class="section-title text-3xl font-bold mb-12 text-[#e0a9c9]">Keahlian Teknis</h2>
+            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <!-- Frontend -->
                 <div class="bg-[#252525] rounded-xl p-6 border border-[#3a3a3a]">
                     <h3 class="text-xl font-semibold mb-4 flex items-center">
                         <span class="mr-3 text-[#e0a9c9]"><i class="fas fa-code"></i></span>
@@ -277,7 +168,7 @@
                         <span class="skill-pill px-4 py-2 rounded-full text-sm">JavaScript</span>
                     </div>
                 </div>
-                <!-- Backend -->
+                
                 <div class="bg-[#252525] rounded-xl p-6 border border-[#3a3a3a]">
                     <h3 class="text-xl font-semibold mb-4 flex items-center">
                         <span class="mr-3 text-[#e0a9c9]"><i class="fas fa-server"></i></span>
@@ -287,7 +178,7 @@
                         <span class="skill-pill px-4 py-2 rounded-full text-sm">PHP</span>
                     </div>
                 </div>
-                <!-- Database -->
+                
                 <div class="bg-[#252525] rounded-xl p-6 border border-[#3a3a3a]">
                     <h3 class="text-xl font-semibold mb-4 flex items-center">
                         <span class="mr-3 text-[#e0a9c9]"><i class="fas fa-database"></i></span>
@@ -301,7 +192,7 @@
                         <span class="skill-pill px-4 py-2 rounded-full text-sm">Optimasi Dasar</span>
                     </div>
                 </div>
-                <!-- Tools -->
+                
                 <div class="bg-[#252525] rounded-xl p-6 border border-[#3a3a3a]">
                     <h3 class="text-xl font-semibold mb-4 flex items-center">
                         <span class="mr-3 text-[#e0a9c9]"><i class="fas fa-tools"></i></span>
@@ -314,7 +205,7 @@
                         <span class="skill-pill px-4 py-2 rounded-full text-sm">Figma</span>
                     </div>
                 </div>
-                <!-- OS -->
+                
                 <div class="bg-[#252525] rounded-xl p-6 border border-[#3a3a3a]">
                     <h3 class="text-xl font-semibold mb-4 flex items-center">
                         <span class="mr-3 text-[#e0a9c9]"><i class="fas fa-desktop"></i></span>
@@ -325,7 +216,7 @@
                         <span class="skill-pill px-4 py-2 rounded-full text-sm">Linux Dasar</span>
                     </div>
                 </div>
-                <!-- Lainnya -->
+                
                 <div class="bg-[#252525] rounded-xl p-6 border border-[#3a3a3a]">
                     <h3 class="text-xl font-semibold mb-4 flex items-center">
                         <span class="mr-3 text-[#e0a9c9]"><i class="fas fa-plus-circle"></i></span>
@@ -339,11 +230,12 @@
             </div>
         </div>
     </div>
-
+    
     <!-- Slide 3: Projects -->
-    <div id="slide3" class="slide px-8 py-12 md:px-16 md:py-20" role="region" aria-label="Proyek Pilihan" tabindex="-1">
+    <div id="slide3" class="slide px-8 py-12 md:px-16 md:py-20">
         <div class="max-w-5xl mx-auto">
             <h2 class="section-title text-3xl font-bold mb-12 text-[#e0a9c9]">Proyek Pilihan</h2>
+            
             <div class="space-y-8">
                 <!-- Project 1 -->
                 <div class="project-card bg-[#252525] rounded-xl p-6 pl-8 border-l-4 border-[#e0a9c9]">
@@ -354,6 +246,7 @@
                             <span><i class="fas fa-map-marker-alt mr-1"></i> Dinas Pemberdayaan Masyarakat dan Desa Kab. Jombang</span>
                         </div>
                     </div>
+                    
                     <div class="flex flex-wrap gap-2 mb-4">
                         <span class="px-3 py-1 bg-[#2d2d2d] rounded-full text-xs text-[#e0a9c9]">HTML</span>
                         <span class="px-3 py-1 bg-[#2d2d2d] rounded-full text-xs text-[#e0a9c9]">CSS</span>
@@ -361,9 +254,11 @@
                         <span class="px-3 py-1 bg-[#2d2d2d] rounded-full text-xs text-[#e0a9c9]">PHP</span>
                         <span class="px-3 py-1 bg-[#2d2d2d] rounded-full text-xs text-[#e0a9c9]">MySQL</span>
                     </div>
+                    
                     <p class="text-gray-300 mb-4">
                         Membangun sistem berbasis web untuk mendata calon penerima bantuan di desa.
                     </p>
+                    
                     <div class="mb-4">
                         <h4 class="font-medium mb-2 text-[#e0a9c9]">Fitur Utama:</h4>
                         <ul class="list-disc list-inside text-gray-300 space-y-1">
@@ -373,10 +268,12 @@
                             <li>Fitur pencarian dan filter</li>
                         </ul>
                     </div>
+                    
                     <a href="https://github.com/indana/sistem-bantuan-desa" target="_blank" class="inline-flex items-center text-[#e0a9c9] hover:underline">
                         <i class="fab fa-github mr-2"></i> github.com/indana/sistem-bantuan-desa
                     </a>
                 </div>
+                
                 <!-- Project 2 -->
                 <div class="project-card bg-[#252525] rounded-xl p-6 pl-8 border-l-4 border-[#e0a9c9]">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
@@ -386,13 +283,16 @@
                             <span><i class="fas fa-map-marker-alt mr-1"></i> PDAM Kab. Gresik</span>
                         </div>
                     </div>
+                    
                     <div class="flex flex-wrap gap-2 mb-4">
                         <span class="px-3 py-1 bg-[#2d2d2d] rounded-full text-xs text-[#e0a9c9]">SQL</span>
                         <span class="px-3 py-1 bg-[#2d2d2d] rounded-full text-xs text-[#e0a9c9]">PHP</span>
                     </div>
+                    
                     <p class="text-gray-300 mb-4">
                         Menjalankan query rutin untuk laporan dan analisis data pelanggan.
                     </p>
+                    
                     <div class="mb-4">
                         <h4 class="font-medium mb-2 text-[#e0a9c9]">Fitur:</h4>
                         <ul class="list-disc list-inside text-gray-300 space-y-1">
@@ -401,10 +301,12 @@
                             <li>Update massal data pelanggan via SQL</li>
                         </ul>
                     </div>
+                    
                     <a href="https://github.com/indana/pdam-customer-query-dashboard" target="_blank" class="inline-flex items-center text-[#e0a9c9] hover:underline">
                         <i class="fab fa-github mr-2"></i> github.com/indana/pdam-customer-query-dashboard
                     </a>
                 </div>
+                
                 <!-- Project 3 -->
                 <div class="project-card bg-[#252525] rounded-xl p-6 pl-8 border-l-4 border-[#e0a9c9]">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
@@ -414,14 +316,17 @@
                             <span><i class="fas fa-map-marker-alt mr-1"></i> Asisten Praktikum UIN Malang</span>
                         </div>
                     </div>
+                    
                     <div class="flex flex-wrap gap-2 mb-4">
                         <span class="px-3 py-1 bg-[#2d2d2d] rounded-full text-xs text-[#e0a9c9]">HTML</span>
                         <span class="px-3 py-1 bg-[#2d2d2d] rounded-full text-xs text-[#e0a9c9]">CSS</span>
                         <span class="px-3 py-1 bg-[#2d2d2d] rounded-full text-xs text-[#e0a9c9]">PHP</span>
                     </div>
+                    
                     <p class="text-gray-300 mb-4">
                         Website interaktif sebagai bahan ajar untuk mahasiswa baru dalam praktikum web.
                     </p>
+                    
                     <div class="mb-4">
                         <h4 class="font-medium mb-2 text-[#e0a9c9]">Fitur:</h4>
                         <ul class="list-disc list-inside text-gray-300 space-y-1">
@@ -430,10 +335,12 @@
                             <li>Form feedback debugging</li>
                         </ul>
                     </div>
+                    
                     <a href="https://github.com/indana/web-praktikum-uin" target="_blank" class="inline-flex items-center text-[#e0a9c9] hover:underline">
                         <i class="fab fa-github mr-2"></i> github.com/indana/web-praktikum-uin
                     </a>
                 </div>
+                
                 <!-- Project 4 -->
                 <div class="project-card bg-[#252525] rounded-xl p-6 pl-8 border-l-4 border-[#e0a9c9]">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
@@ -442,13 +349,16 @@
                             <span class="mr-3"><i class="far fa-calendar-alt mr-1"></i> Desember 2023</span>
                         </div>
                     </div>
+                    
                     <div class="flex flex-wrap gap-2 mb-4">
                         <span class="px-3 py-1 bg-[#2d2d2d] rounded-full text-xs text-[#e0a9c9]">HTML</span>
                         <span class="px-3 py-1 bg-[#2d2d2d] rounded-full text-xs text-[#e0a9c9]">CSS</span>
                     </div>
+                    
                     <p class="text-gray-300 mb-4">
                         Proyek latihan responsive design pada course Front-End CSS di MySkill.
                     </p>
+                    
                     <div class="mb-4">
                         <h4 class="font-medium mb-2 text-[#e0a9c9]">Fitur:</h4>
                         <ul class="list-disc list-inside text-gray-300 space-y-1">
@@ -457,6 +367,7 @@
                             <li>Komponen modular (card, navbar, footer)</li>
                         </ul>
                     </div>
+                    
                     <a href="https://github.com/indana/landing-ecofarm" target="_blank" class="inline-flex items-center text-[#e0a9c9] hover:underline">
                         <i class="fab fa-github mr-2"></i> github.com/indana/landing-ecofarm
                     </a>
@@ -464,16 +375,18 @@
             </div>
         </div>
     </div>
-
+    
     <!-- Slide 4: Certifications -->
-    <div id="slide4" class="slide px-8 py-12 md:px-16 md:py-20" role="region" aria-label="Sertifikasi" tabindex="-1">
+    <div id="slide4" class="slide px-8 py-12 md:px-16 md:py-20">
         <div class="max-w-5xl mx-auto">
             <h2 class="section-title text-3xl font-bold mb-12 text-[#e0a9c9]">Sertifikasi</h2>
+            
             <div class="bg-[#252525] rounded-xl p-6 border border-[#3a3a3a] hover:border-[#e0a9c9] transition-all duration-300">
                 <div class="flex flex-col md:flex-row items-start gap-6">
                     <div class="w-16 h-16 rounded-full bg-[#2d2d2d] flex items-center justify-center text-[#e0a9c9]">
                         <i class="fas fa-certificate text-2xl"></i>
                     </div>
+                    
                     <div class="flex-1">
                         <h3 class="text-xl font-semibold mb-2">Front-End CSS – MySkill</h3>
                         <p class="text-gray-400 mb-4"><i class="far fa-calendar-alt mr-2"></i> Desember 2023</p>
@@ -485,11 +398,12 @@
             </div>
         </div>
     </div>
-
+    
     <!-- Slide 5: Contact -->
-    <div id="slide5" class="slide px-8 py-12 md:px-16 md:py-20" role="region" aria-label="Kontak" tabindex="-1">
+    <div id="slide5" class="slide px-8 py-12 md:px-16 md:py-20">
         <div class="max-w-5xl mx-auto">
             <h2 class="section-title text-3xl font-bold mb-12 text-[#e0a9c9]">Kontak</h2>
+            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-[#252525] rounded-xl p-6 border border-[#3a3a3a] hover:border-[#e0a9c9] transition-all duration-300">
                     <div class="flex items-center gap-4">
@@ -502,6 +416,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="bg-[#252525] rounded-xl p-6 border border-[#3a3a3a] hover:border-[#e0a9c9] transition-all duration-300">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-full bg-[#2d2d2d] flex items-center justify-center text-[#e0a9c9]">
@@ -513,6 +428,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="bg-[#252525] rounded-xl p-6 border border-[#3a3a3a] hover:border-[#e0a9c9] transition-all duration-300">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-full bg-[#2d2d2d] flex items-center justify-center text-[#e0a9c9]">
@@ -524,6 +440,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="bg-[#252525] rounded-xl p-6 border border-[#3a3a3a] hover:border-[#e0a9c9] transition-all duration-300">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-full bg-[#2d2d2d] flex items-center justify-center text-[#e0a9c9]">
@@ -536,62 +453,75 @@
                     </div>
                 </div>
             </div>
+            
             <div class="mt-12 text-center">
                 <p class="text-gray-400">© 2024 Indana Zulfa. All rights reserved.</p>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const slides = document.querySelectorAll('.slide');
-            const dots = document.querySelectorAll('.nav-dot');
-
-            function showSlide(idx) {
-                slides.forEach((slide, i) => {
-                    slide.classList.toggle('active', i === idx);
-                    if (i === idx) {
-                        slide.setAttribute('tabindex', '-1');
-                        slide.focus();
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.nav-dot');
+        
+        // Navigation dots functionality
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const slideId = dot.getAttribute('data-slide');
+                
+                // Hide all slides
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
                 });
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === idx);
+                
+                // Deactivate all dots
+                dots.forEach(d => {
+                    d.classList.remove('active');
                 });
-            }
-
-            dots.forEach((dot, idx) => {
-                dot.addEventListener('click', () => showSlide(idx));
-                dot.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        showSlide(idx);
-                    }
-                });
-            });
-
-            document.addEventListener('keydown', (e) => {
-                const activeIndex = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
-                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-                    showSlide((activeIndex + 1) % slides.length);
-                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-                    showSlide((activeIndex - 1 + slides.length) % slides.length);
-                }
-            });
-
-            let wheelTimeout;
-            document.addEventListener('wheel', (e) => {
-                if (wheelTimeout) return;
-                wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 500);
-                const activeIndex = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
-                if (e.deltaY > 0) {
-                    showSlide((activeIndex + 1) % slides.length);
-                } else {
-                    showSlide((activeIndex - 1 + slides.length) % slides.length);
-                }
+                
+                // Show selected slide
+                document.getElementById(slideId).classList.add('active');
+                
+                // Activate selected dot
+                dot.classList.add('active');
             });
         });
-    </script>
-</body>
-</html>
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const activeSlide = document.querySelector('.slide.active');
+            const activeIndex = Array.from(slides).indexOf(activeSlide);
+            
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                const nextIndex = (activeIndex + 1) % slides.length;
+                dots[nextIndex].click();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                const prevIndex = (activeIndex - 1 + slides.length) % slides.length;
+                dots[prevIndex].click();
+            }
+        });
+        
+        // Mouse wheel navigation
+        let wheelTimeout;
+        document.addEventListener('wheel', (e) => {
+            if (wheelTimeout) return;
+            
+            wheelTimeout = setTimeout(() => {
+                wheelTimeout = null;
+            }, 500);
+            
+            const activeSlide = document.querySelector('.slide.active');
+            const activeIndex = Array.from(slides).indexOf(activeSlide);
+            
+            if (e.deltaY > 0) {
+                const nextIndex = (activeIndex + 1) % slides.length;
+                dots[nextIndex].click();
+            } else {
+                const prevIndex = (activeIndex - 1 + slides.length) % slides.length;
+                dots[prevIndex].click();
+            }
+        });
+    });
+</script>
